@@ -8,6 +8,7 @@ import Section from 'components/Section';
 
 const initialValues = {
   name: '',
+  number: '',
 };
 
 const schema = yup.object().shape({
@@ -18,16 +19,16 @@ const schema = yup.object().shape({
       message:
         "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan",
     }),
-  // phone: yup
-  //   .string()
-  //   .required()
-  //   .matches(
-  //     /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-  //     {
-  //       message:
-  //         'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +',
-  //     }
-  //   ),
+  number: yup
+    .string()
+    .required()
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      {
+        message:
+          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +',
+      }
+    ),
 });
 
 export default class NewContactForm extends Component {
@@ -36,11 +37,16 @@ export default class NewContactForm extends Component {
   };
 
   submitHandler = (values, actions) => {
-    this.props.addContact({ id: nanoid(), name: values.name });
+    this.props.addContact({
+      id: nanoid(),
+      name: values.name,
+      number: values.number,
+    });
     actions.resetForm();
   };
   render() {
     const nameInputId = nanoid();
+    const numberInputId = nanoid();
     return (
       <Section>
         <Formik
@@ -52,6 +58,9 @@ export default class NewContactForm extends Component {
             <LabelName htmlFor={nameInputId}>Name</LabelName>
             <Input id={nameInputId} name="name" type="text" />
             <Error name="name" component="p" />
+            <LabelName htmlFor={numberInputId}>Number</LabelName>
+            <Input id={numberInputId} name="number" type="tel" />
+            <Error name="number" component="p" />
             <Button type="submit">Add contact</Button>
           </Form>
         </Formik>

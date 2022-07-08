@@ -30,7 +30,7 @@ export class App extends Component {
             // fontSize: 40,
             color: '#010101',
             margin: '0 auto',
-            width: '300px',
+            width: '400px',
           }}
         >
           <Box as="h1" mx="auto">

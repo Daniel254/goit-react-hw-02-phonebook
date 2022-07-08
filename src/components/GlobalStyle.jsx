@@ -3,7 +3,6 @@ import 'modern-normalize';
 
 const GlobalStyle = createGlobalStyle`
   body {
-    ${'' /* color: ${props => (props.whiteColor ? 'white' : 'black')}; */}
     background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
     font-family: "Roboto", sans-serif;
   }
