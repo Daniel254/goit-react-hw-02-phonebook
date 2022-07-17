@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Notification from 'components/Notification';
-import Section from 'components/Section';
 import { List } from './ContactList.styled';
-import SearchContact from 'components/SearchContact';
 import sanitizeString from 'utils/sanitizeString';
 
-function FilteredList({ filter, listItems, message, filterHandler }) {
+function FilteredList({ listItems, message }) {
   return (
     <>
-      <SearchContact filterHandler={filterHandler} filterString={filter} />
       {listItems.length > 0 ? (
         <List>
           {listItems.map(({ id, name, number }) => (
@@ -35,25 +32,15 @@ export default class ContactList extends Component {
       })
     ),
   };
-  state = {
-    filter: '',
-  };
-
-  filterHandler = ({ currentTarget: { value } }) => {
-    this.setState({
-      filter: sanitizeString(value),
-    });
-  };
 
   render() {
-    const { contactList } = this.props;
-    const { filter } = this.state;
+    const { contactList, filter } = this.props;
     const filteredContactList = contactList.filter(item =>
       sanitizeString(item.name).includes(filter)
     );
 
     return (
-      <Section title="Contacts" mt="10px">
+      <>
         {contactList.length > 0 ? (
           <FilteredList
             filter={filter}
@@ -62,9 +49,9 @@ export default class ContactList extends Component {
             message="No contacts found"
           />
         ) : (
-          <Notification message="No contacts" />
+          <Notification message="Contact list is empty" />
         )}
-      </Section>
+      </>
     );
   }
 }
