@@ -17,17 +17,31 @@ export class App extends Component {
     ],
     filter: '',
   };
+
+  checkExistingContactName = newContact => {
+    return (
+      this.state.contacts.filter(
+        contact =>
+          sanitizeString(contact.name) === sanitizeString(newContact.name)
+      ).length > 0
+    );
+  };
+
   filterHandler = ({ currentTarget: { value } }) => {
     this.setState({
       filter: sanitizeString(value),
     });
   };
-  addContactHandler = contact => {
-    console.log('contact', contact);
+
+  addContactHandler = async newContact => {
+    if (this.checkExistingContactName(newContact)) {
+      throw new Error(`${newContact.name} is already in contacts`);
+    }
     this.setState(prev => ({
-      contacts: [contact, ...prev.contacts],
+      contacts: [newContact, ...prev.contacts],
     }));
   };
+
   render() {
     const { contacts, filter } = this.state;
     return (

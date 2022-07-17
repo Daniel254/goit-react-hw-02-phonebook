@@ -37,12 +37,14 @@ export default class NewContactForm extends Component {
   };
 
   submitHandler = (values, actions) => {
-    this.props.addContact({
-      id: nanoid(),
-      name: values.name,
-      number: values.number,
-    });
-    actions.resetForm();
+    this.props
+      .addContact({
+        id: nanoid(),
+        name: values.name,
+        number: values.number,
+      })
+      .then(actions.resetForm)
+      .catch(error => alert(error));
   };
   render() {
     const nameInputId = nanoid();
