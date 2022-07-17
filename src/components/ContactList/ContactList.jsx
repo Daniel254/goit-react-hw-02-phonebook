@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Notification from 'components/Notification';
-import { List } from './ContactList.styled';
+import { List, DeleteBtn } from './ContactList.styled';
 import sanitizeString from 'utils/sanitizeString';
 
-function FilteredList({ listItems, message }) {
+function FilteredList({ listItems, message, deleteContact }) {
   return (
     <>
       {listItems.length > 0 ? (
@@ -12,6 +12,7 @@ function FilteredList({ listItems, message }) {
           {listItems.map(({ id, name, number }) => (
             <li key={id}>
               {name}: {number}
+              <DeleteBtn onClick={() => deleteContact(id)}>Delete</DeleteBtn>
             </li>
           ))}
         </List>
@@ -34,7 +35,7 @@ export default class ContactList extends Component {
   };
 
   render() {
-    const { contactList, filter } = this.props;
+    const { contactList, filter, deleteContact } = this.props;
     const filteredContactList = contactList.filter(item =>
       sanitizeString(item.name).includes(filter)
     );
@@ -46,6 +47,7 @@ export default class ContactList extends Component {
             filter={filter}
             filterHandler={this.filterHandler}
             listItems={filteredContactList}
+            deleteContact={deleteContact}
             message="No contacts found"
           />
         ) : (
