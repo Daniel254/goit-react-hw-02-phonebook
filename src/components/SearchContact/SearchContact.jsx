@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Input } from './SearchContact.styled';
 
 export default class SearchContact extends Component {
   static propTypes = { filterHandler: PropTypes.func.isRequired };
@@ -9,7 +10,7 @@ export default class SearchContact extends Component {
     return (
       <div>
         Find contact by name
-        <input
+        <Input
           name="filter"
           type="text"
           autoComplete="off"
